@@ -17,7 +17,7 @@ workflows:
   scheduled_pipeline:
     triggers:
       - schedule:
-          cron: "*/10 * * * *"  # Run every 10 minutes
+          cron: "H/10 * * * *"  # Corrected cron syntax
           filters:
             branches:
               only:
