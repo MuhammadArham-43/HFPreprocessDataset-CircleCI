@@ -1,0 +1,30 @@
+version: 2.1
+
+jobs:
+  process_datasets:
+    docker:
+      - image: cimg/python:3.10
+    steps:
+      - checkout
+      - run:
+          name: Install Dependencies
+          command: pip install -r requirements.txt
+      - run:
+          name: Process Datasets
+          command: python process_datasets.py
+
+workflows:
+  pipeline:
+    jobs:
+      - process_datasets  # Runs on every push to main
+
+  scheduled_pipeline:
+    triggers:
+      - schedule:
+          cron: "0 0 * * *"  # Runs every day at 00:00 UTC
+          filters:
+            branches:
+              only:
+                - main
+    jobs:
+      - process_datasets
