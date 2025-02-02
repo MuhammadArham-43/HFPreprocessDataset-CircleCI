@@ -21,7 +21,7 @@ class DatasetMonitor:
         # -- Include any other possible cleaning requirements as per your datasets -- #
         return Dataset.from_pandas(df) 
     
-    def get_datasets_list(self):
+    def process_datasets(self):
         # -- Fetches all datasets information from the user's HuggingFace account -- #
         datasets = self.api.list_datasets(
             author=self.username,
@@ -52,9 +52,10 @@ class DatasetMonitor:
                 new_data_repo.repo_id,
                 private=True,
             )
+            print(f"Processed Dataset: {dataset_name}")
 
 if __name__ == "__main__":
     HF_USERNAME = os.environ["HF_USERNAME"]
     HF_TOKEN = os.environ["HF_TOKEN"]
     monitor = DatasetMonitor(username=HF_USERNAME, token=HF_TOKEN)
-    monitor.get_datasets_list()
+    monitor.process_datasets()
